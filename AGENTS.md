@@ -38,6 +38,8 @@ template for another direction instead of mixing domains inside one instance.
 ## Ingestion Rules
 
 - Use `scripts/ingest.py file` for local files.
+- Use `$kb-ingest-originals` or `python3 scripts/ingest.py originals` to batch
+  convert files dropped into `originals/`.
 - Use MarkItDown for non-Markdown inputs when available.
 - Preserve original file provenance in raw frontmatter.
 - Do not place binary files, PDFs, Office files, images, or audio under `raw/`.

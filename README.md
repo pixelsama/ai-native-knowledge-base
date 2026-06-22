@@ -80,6 +80,18 @@ python3 scripts/ingest.py web \
   --authority-tier 1 < /tmp/vulkan-overview.md
 ```
 
+Batch-ingest files that were dropped into `originals/`:
+
+```bash
+python3 scripts/ingest.py originals
+```
+
+In Codex, invoke the repo skill:
+
+```text
+$kb-ingest-originals
+```
+
 Validate the repository:
 
 ```bash

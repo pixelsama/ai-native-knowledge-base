@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ingest Originals"
+  short_description: "Batch ingest originals into raw Markdown"
+  default_prompt: "Use $kb-ingest-originals to convert unprocessed files in originals/ into canonical raw Markdown."

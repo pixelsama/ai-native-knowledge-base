@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.ingest import ingest_markdown_file, ingest_web_markdown, slugify
+from scripts.ingest import ingest_originals, ingest_markdown_file, ingest_web_markdown, slugify
 
 
 class IngestTests(unittest.TestCase):
@@ -55,6 +55,49 @@ class IngestTests(unittest.TestCase):
             self.assertIn('source_origin: "web-research"', text)
             self.assertIn('url: "https://www.khronos.org/vulkan/"', text)
             self.assertIn("# Vulkan Ray Tracing", text)
+
+    def test_originals_batch_ingests_unconverted_files_by_category_folder(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "originals" / "rendering" / "brdf-notes.md"
+            source.parent.mkdir(parents=True)
+            source.write_text("# BRDF\n\nA source-derived note.\n", encoding="utf-8")
+
+            result = ingest_originals(repo_root=root)
+
+            self.assertEqual([p.relative_to(root.resolve()).as_posix() for p in result.created], [
+                "raw/imported/rendering/brdf-notes.md"
+            ])
+            self.assertEqual(result.skipped, [])
+            self.assertTrue((root / "raw" / "imported" / "rendering" / "brdf-notes.md").exists())
+
+    def test_originals_batch_skips_files_with_existing_content_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "originals" / "rendering" / "brdf-notes.md"
+            source.parent.mkdir(parents=True)
+            source.write_text("# BRDF\n\nA source-derived note.\n", encoding="utf-8")
+
+            first = ingest_originals(repo_root=root)
+            second = ingest_originals(repo_root=root)
+
+            self.assertEqual(len(first.created), 1)
+            self.assertEqual(second.created, [])
+            self.assertEqual(second.skipped, [source.resolve()])
+
+    def test_originals_batch_dry_run_does_not_write_raw_files(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "originals" / "loose-note.md"
+            source.parent.mkdir(parents=True)
+            source.write_text("# Loose\n", encoding="utf-8")
+
+            result = ingest_originals(repo_root=root, dry_run=True)
+
+            self.assertEqual([p.relative_to(root.resolve()).as_posix() for p in result.created], [
+                "raw/imported/uncategorized/loose-note.md"
+            ])
+            self.assertFalse((root / "raw").exists())
 
 
 if __name__ == "__main__":
