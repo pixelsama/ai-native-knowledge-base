@@ -5,9 +5,13 @@ description = "An AI-maintained, source-grounded template for one domain-specifi
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
+dependencies = ["PyYAML>=6.0"]
 
 [project.optional-dependencies]
 ingest = ["markitdown[all]"]
+
+[tool.setuptools]
+packages = ["scripts"]
 
 [tool.unittest]
 start-directory = "tests"

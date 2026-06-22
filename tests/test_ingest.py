@@ -54,6 +54,7 @@ class IngestTests(unittest.TestCase):
             )
             self.assertIn('source_origin: "web-research"', text)
             self.assertIn('url: "https://www.khronos.org/vulkan/"', text)
+            self.assertIn('content_hash:', text)
             self.assertIn("# Vulkan Ray Tracing", text)
 
     def test_originals_batch_ingests_unconverted_files_by_category_folder(self):

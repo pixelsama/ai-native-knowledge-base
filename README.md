@@ -46,10 +46,16 @@ contains the source record the knowledge base actually consumes.
 
 ## Quick Start
 
+Install the template dependencies:
+
+```bash
+python3 -m pip install -e .
+```
+
 Install optional conversion support when you need non-Markdown ingestion:
 
 ```bash
-python3 -m pip install 'markitdown[all]'
+python3 -m pip install -e '.[ingest]'
 ```
 
 Ingest a local Markdown file:

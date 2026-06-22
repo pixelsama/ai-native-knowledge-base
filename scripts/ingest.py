@@ -12,6 +12,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
+try:
+    from scripts.frontmatter import parse_frontmatter
+except ModuleNotFoundError:
+    from frontmatter import parse_frontmatter
+
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -28,6 +33,10 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def quote(value: object) -> str:
@@ -50,22 +59,6 @@ def relative_to_root(path: Path, repo_root: Path) -> str:
         return path.resolve().relative_to(repo_root.resolve()).as_posix()
     except ValueError:
         return path.resolve().as_posix()
-
-
-def parse_frontmatter(path: Path) -> dict[str, str] | None:
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---\n"):
-        return None
-    end = text.find("\n---", 4)
-    if end == -1:
-        return None
-    metadata: dict[str, str] = {}
-    for line in text[4:end].splitlines():
-        if ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        metadata[key.strip()] = value.strip().strip('"')
-    return metadata
 
 
 def write_raw(output: Path, metadata: dict[str, object], body: str, overwrite: bool = False) -> Path:
@@ -148,6 +141,7 @@ def ingest_web_markdown(
         "source_origin": "web-research",
         "url": url,
         "retrieved_at": utc_now(),
+        "content_hash": sha256_text(body),
         "authority_tier": authority_tier,
         "trust": "source-derived",
         "status": "canonical-raw",
