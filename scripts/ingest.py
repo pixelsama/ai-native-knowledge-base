@@ -80,7 +80,6 @@ def ingest_markdown_file(
     *,
     input_path: Path,
     repo_root: Path,
-    domain: str,
     category: str,
     title: str | None = None,
     source_type: str = "document",
@@ -97,7 +96,7 @@ def ingest_markdown_file(
     else:
         body, converter = convert_with_markitdown(input_path)
 
-    output = repo_root / "raw" / "imported" / slugify(domain) / slugify(category) / f"{slugify(title)}.md"
+    output = repo_root / "raw" / "imported" / slugify(category) / f"{slugify(title)}.md"
     metadata = {
         "title": title,
         "source_type": source_type,
@@ -119,14 +118,13 @@ def ingest_web_markdown(
     repo_root: Path,
     url: str,
     title: str,
-    domain: str,
     category: str,
     source_type: str = "web",
     authority_tier: int = 3,
     overwrite: bool = False,
 ) -> Path:
     repo_root = repo_root.resolve()
-    output = repo_root / "raw" / "web" / slugify(domain) / slugify(category) / f"{slugify(title)}.md"
+    output = repo_root / "raw" / "web" / slugify(category) / f"{slugify(title)}.md"
     metadata = {
         "title": title,
         "source_type": source_type,
@@ -147,7 +145,6 @@ def build_parser() -> argparse.ArgumentParser:
 
     file_parser = subparsers.add_parser("file", help="Convert or copy a local source into raw/imported/")
     file_parser.add_argument("input_path", type=Path)
-    file_parser.add_argument("--domain", required=True)
     file_parser.add_argument("--category", required=True)
     file_parser.add_argument("--title")
     file_parser.add_argument("--source-type", default="document")
@@ -157,7 +154,6 @@ def build_parser() -> argparse.ArgumentParser:
     web_parser = subparsers.add_parser("web", help="Materialize web research Markdown into raw/web/")
     web_parser.add_argument("--url", required=True)
     web_parser.add_argument("--title", required=True)
-    web_parser.add_argument("--domain", required=True)
     web_parser.add_argument("--category", required=True)
     web_parser.add_argument("--source-type", default="web")
     web_parser.add_argument("--authority-tier", type=int, default=3)
@@ -175,7 +171,6 @@ def main(argv: Iterable[str] | None = None) -> int:
             output = ingest_markdown_file(
                 input_path=args.input_path,
                 repo_root=args.repo_root,
-                domain=args.domain,
                 category=args.category,
                 title=args.title,
                 source_type=args.source_type,
@@ -189,7 +184,6 @@ def main(argv: Iterable[str] | None = None) -> int:
                 repo_root=args.repo_root,
                 url=args.url,
                 title=args.title,
-                domain=args.domain,
                 category=args.category,
                 source_type=args.source_type,
                 authority_tier=args.authority_tier,

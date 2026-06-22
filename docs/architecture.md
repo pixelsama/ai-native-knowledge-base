@@ -1,6 +1,7 @@
 # Architecture
 
-This project separates source integrity from learning experience.
+This project separates source integrity from learning experience for one
+domain-specific knowledge base.
 
 ## Layers
 
@@ -24,3 +25,5 @@ questions     -> tasks/ or source-gap discovery
 ```
 
 The invariant is that durable knowledge flows through `raw/` before synthesis.
+The repository root is the domain boundary. Create another repository from this
+template when you want another independent direction.

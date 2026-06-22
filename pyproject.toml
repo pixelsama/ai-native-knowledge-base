@@ -1,7 +1,7 @@
 [project]
 name = "ai-native-knowledge-base"
 version = "0.1.0"
-description = "An AI-maintained, source-grounded knowledge base template."
+description = "An AI-maintained, source-grounded template for one domain-specific knowledge base."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

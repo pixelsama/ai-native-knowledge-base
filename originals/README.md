@@ -6,5 +6,5 @@ This directory is ignored by default because original files are often large or
 copyrighted. Convert them into canonical Markdown with:
 
 ```bash
-python3 scripts/ingest.py file originals/example.pdf --domain computer-graphics --category rendering --title "Example"
+python3 scripts/ingest.py file originals/example.pdf --category rendering --title "Example"
 ```

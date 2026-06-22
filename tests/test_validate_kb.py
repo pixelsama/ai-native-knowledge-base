@@ -31,7 +31,7 @@ class ValidateKnowledgeBaseTests(unittest.TestCase):
     def test_learning_artifact_requires_manifest_and_sources(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            artifact = root / "learning" / "computer-graphics" / "brdf"
+            artifact = root / "learning" / "brdf"
             artifact.mkdir(parents=True)
             (artifact / "index.html").write_text("<!doctype html><title>BRDF</title>", encoding="utf-8")
 
@@ -58,7 +58,7 @@ class ValidateKnowledgeBaseTests(unittest.TestCase):
                 "---\n\n# BRDF\n",
                 encoding="utf-8",
             )
-            artifact = root / "learning" / "computer-graphics" / "brdf"
+            artifact = root / "learning" / "brdf"
             artifact.mkdir(parents=True)
             (artifact / "index.html").write_text("<!doctype html><title>BRDF</title>", encoding="utf-8")
             (artifact / "sources.md").write_text("# Sources\n\n- raw/web/graphics/brdf.md\n", encoding="utf-8")

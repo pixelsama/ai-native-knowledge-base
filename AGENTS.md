@@ -4,6 +4,10 @@ This repository is a source-grounded knowledge base, not a personal memory dump.
 Treat it like a maintained software project: every durable knowledge claim needs
 source material, provenance, validation, and a reviewable diff.
 
+This repository represents exactly one learning or research direction. The
+repository root is the knowledge boundary. Create another repository from this
+template for another direction instead of mixing domains inside one instance.
+
 ## Protected Requirements
 
 - User conversations are learning signals, not authoritative sources.
@@ -13,6 +17,8 @@ source material, provenance, validation, and a reviewable diff.
 - Web research must be materialized as Markdown under `raw/web/` before it is
   synthesized into the knowledge layer.
 - Interactive learning artifacts must record their source inputs.
+- Do not read, cite, or synthesize from sibling knowledge bases unless the user
+  explicitly authorizes cross-knowledge-base work.
 
 ## Directory Contract
 

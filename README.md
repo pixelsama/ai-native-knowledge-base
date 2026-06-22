@@ -1,12 +1,17 @@
 # AI-Native Knowledge Base
 
-An open template for a source-grounded knowledge base maintained by coding
-agents such as Codex or Claude Code.
+An open template for one source-grounded, domain-specific knowledge base
+maintained by coding agents such as Codex or Claude Code.
 
 The core idea is simple: do not let chat history become knowledge. User
 questions are learning signals. Durable knowledge must come from source material,
 be converted into canonical Markdown, and then be synthesized into wiki pages,
 claims, and interactive learning artifacts.
+
+Each generated repository should represent one learning or research direction:
+one for computer graphics, another for drawing, another for operating systems,
+and so on. The repository root is the domain boundary, so paths inside the
+knowledge base do not repeat the domain name.
 
 ## Architecture
 
@@ -51,7 +56,6 @@ Ingest a local Markdown file:
 
 ```bash
 python3 scripts/ingest.py file originals/pbrt-notes.md \
-  --domain computer-graphics \
   --category rendering \
   --title "PBRT Notes" \
   --authority-tier 1
@@ -61,7 +65,6 @@ Ingest a PDF, DOCX, PPTX, EPUB, or other MarkItDown-supported file:
 
 ```bash
 python3 scripts/ingest.py file originals/rendering-paper.pdf \
-  --domain computer-graphics \
   --category papers \
   --title "Rendering Paper" \
   --authority-tier 1
@@ -73,7 +76,6 @@ Materialize web research before updating the wiki:
 python3 scripts/ingest.py web \
   --url https://www.khronos.org/vulkan/ \
   --title "Vulkan Overview" \
-  --domain computer-graphics \
   --category graphics-api \
   --authority-tier 1 < /tmp/vulkan-overview.md
 ```
@@ -101,7 +103,7 @@ Interactive teaching outputs live in `learning/`. Each artifact is a small
 package:
 
 ```text
-learning/computer-graphics/brdf/
+learning/brdf/
   index.html
   manifest.json
   sources.md

@@ -19,7 +19,6 @@ class IngestTests(unittest.TestCase):
             output = ingest_markdown_file(
                 input_path=source,
                 repo_root=root,
-                domain="computer-graphics",
                 category="rendering",
                 title="BRDF Notes",
                 source_type="notes",
@@ -29,7 +28,7 @@ class IngestTests(unittest.TestCase):
             text = output.read_text(encoding="utf-8")
             self.assertEqual(
                 output.relative_to(root.resolve()).as_posix(),
-                "raw/imported/computer-graphics/rendering/brdf-notes.md",
+                "raw/imported/rendering/brdf-notes.md",
             )
             self.assertIn('source_origin: "uploaded-file"', text)
             self.assertIn('status: "canonical-raw"', text)
@@ -44,7 +43,6 @@ class IngestTests(unittest.TestCase):
                 repo_root=root,
                 url="https://www.khronos.org/vulkan/",
                 title="Vulkan Ray Tracing",
-                domain="computer-graphics",
                 category="graphics-api",
                 authority_tier=1,
             )
@@ -52,7 +50,7 @@ class IngestTests(unittest.TestCase):
             text = output.read_text(encoding="utf-8")
             self.assertEqual(
                 output.relative_to(root.resolve()).as_posix(),
-                "raw/web/computer-graphics/graphics-api/vulkan-ray-tracing.md",
+                "raw/web/graphics-api/vulkan-ray-tracing.md",
             )
             self.assertIn('source_origin: "web-research"', text)
             self.assertIn('url: "https://www.khronos.org/vulkan/"', text)
