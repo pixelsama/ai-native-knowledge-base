@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Keep uploaded originals local by default. Commit only when rights allow it.
+originals/**
+!originals/README.md
+
+# Generated learning assets can be large; commit intentionally.
+learning/**/assets/*

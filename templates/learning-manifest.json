@@ -1,0 +1,12 @@
+{
+  "title": "Interactive Explainer",
+  "topic": "computer-graphics/example",
+  "artifact_type": "interactive-html",
+  "status": "draft",
+  "generated_from": [
+    "wiki/computer-graphics/example.md",
+    "raw/web/example.md"
+  ],
+  "learning_goal": "State the learner outcome here.",
+  "last_verified": "2026-06-22"
+}
